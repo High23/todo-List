@@ -1,0 +1,271 @@
+:root {
+    --zinc600: #525252;
+    --zinc700: #3f3f46;
+    --zinc800: #27272a;
+    --orange100: #ffedd5;
+    --orange200: #fed7aa;
+    --orange300: #fdba74;
+    --gray600: #4b5563;
+    --green200: #bbf7d0;
+    --green300: #86efac;
+    --green400: #4ade80;
+    --emerald200: #a7f3d0;
+    --emerald300: #6ee7b7;
+    --red400: #f87171;
+    --red500: #ef4444;
+    --light-gray-tp: rgba(136, 136, 136, 0.445);
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+#content {
+    display: grid;
+    height: inherit;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: auto 1fr;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    grid-column: 1 / 3;
+    padding: 10px 30px;
+    font-size: 2.1rem;
+    font-weight: 700;
+    background-color: var(--zinc800);
+    color: white;
+    gap: 10px;
+}
+
+.sidebar {
+    background-color: var(--orange100);
+}
+
+.todo-form {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    grid-template-rows: repeat(2, auto);
+    padding: 20px 50px;
+    padding-left: 60px;
+    row-gap: 15px;
+    font-size: 1.07rem;
+}
+
+.title {
+    grid-column: 1 / 2;
+}
+
+.due-date {
+    grid-column: 2 / 3;
+}
+
+.priority {
+    grid-column: 3 / 4;
+}
+
+.note {
+    grid-row: 2 / 3;
+    grid-column: 1 / 3;
+}
+
+div > label {
+    padding-right: 3px;
+}
+
+label[for="note"] {
+    display: block;
+    width: fit-content;
+    padding-bottom: 5px;
+}
+
+.buttons {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.title-of-tab {
+    padding: 30px 50px;
+    padding-bottom: 5px;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+input, button, textarea {
+    appearance: none;
+    border: 1px solid var(--gray600);
+    padding: 3px 5px;
+}
+
+textarea {
+    resize: none;
+    width: 90%;
+    padding-top: 5px;
+}
+
+input[type="text"] {
+    width: 250px;
+    border-radius: 5px;
+}
+
+input[type="date"] {
+    width: 150px;
+}
+
+input:hover, textarea:hover {
+    border-color: black;
+}
+
+.submit, .cancel {
+    padding: 5px 15px;
+}
+
+.submit {
+    background-color: var(--green400);
+    border-radius: 10px;
+}
+
+.cancel {
+    background-color: var(--red500);
+    border-radius: 10px;
+}
+
+.submit:active  {
+    background-color: var(--green300);
+}
+
+.cancel:active {
+    background-color: var(--red400);
+}
+
+#priority {
+    width: 80px;
+    padding: 2px;
+}
+
+.tabs, .projects {
+    list-style-type: none;
+    padding: 25px;
+    padding-left: 35px;
+    padding-right: 70px;
+    margin: 0;
+    display: grid;
+    row-gap: 20px;
+    font-size: 1.3rem;
+}
+
+.tabs {
+    border-bottom: 1px solid black;
+}
+
+.projects {
+    padding-left: 30px;
+}
+
+.projects > span {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid black;
+}
+
+.todos {
+    display: grid;
+    gap: 15px;
+    list-style-type: none;
+    padding: 25px;
+    padding-left: 60px;
+    margin: 0;
+    width: clamp(550px, 80%, 1400px);
+    font-size: 1.1rem;
+}
+
+.task > span {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    gap: 25px;
+}
+
+input[type="radio"] {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+}
+
+input[type="radio"]:checked + span {
+    background-color: var(--emerald300);
+    border: 1px solid black;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    left: 8px;
+    top: 6px;
+}
+
+.check {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.check > span:nth-of-type(2) {
+    padding-left: 15px;
+}
+
+.hidden {
+    display: hidden;
+}
+
+.plus-icon {
+    width: 35px;
+}
+
+.add-task {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    border-radius: 10px;
+}
+
+.add-task:hover {
+    background-color: var(--light-gray-tp);
+}
+
+.details {
+    height: 15px;
+}
+
+.header-icon {
+    width: 80px;
+}
+
+.sidebar-icon {
+    width: 40px;
+}
+
+.sidebar-tab {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+#input-project-name {
+    width: 175px;
+}
+
+.add-project > div {
+    display: flex;
+    justify-content: space-between;
+}
