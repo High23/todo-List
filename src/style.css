@@ -154,8 +154,8 @@ input:hover, textarea:hover {
     padding-right: 70px;
     margin: 0;
     display: grid;
-    row-gap: 20px;
-    font-size: 1.3rem;
+    row-gap: 15px;
+    font-size: 1.2rem;
 }
 
 .tabs {
@@ -164,6 +164,7 @@ input:hover, textarea:hover {
 
 .projects {
     padding-left: 30px;
+    row-gap: 10px;
 }
 
 .projects > span {
@@ -186,7 +187,7 @@ input:hover, textarea:hover {
     padding-left: 60px;
     margin: 0;
     width: clamp(550px, 80%, 1400px);
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 .task > span {
@@ -220,7 +221,7 @@ input[type="radio"]:checked + span {
 }
 
 .check > span:nth-of-type(2) {
-    padding-left: 15px;
+    padding-left: 10px;
 }
 
 .hidden {
@@ -228,19 +229,24 @@ input[type="radio"]:checked + span {
 }
 
 .plus-icon {
-    width: 35px;
+    width: 22px;
 }
 
-.add-task {
+.add-task, .add-project, .project {
     display: flex;
     align-items: center;
     gap: 10px;
     font-weight: 500;
     border-radius: 10px;
+    padding: 3px 0;
+    padding-left: 3px;
 }
 
-.add-task:hover {
+.add-task:hover,
+.add-project:hover,
+.sidebar-tab:hover {
     background-color: var(--light-gray-tp);
+    cursor: pointer;
 }
 
 .details {
@@ -252,7 +258,7 @@ input[type="radio"]:checked + span {
 }
 
 .sidebar-icon {
-    width: 40px;
+    width: 35px;
 }
 
 .sidebar-tab {
@@ -263,9 +269,44 @@ input[type="radio"]:checked + span {
 
 #input-project-name {
     width: 175px;
+    overflow: auto;
 }
 
-.add-project > div {
-    display: flex;
+.create-project > div {
+    display: grid;
+    grid-auto-flow: column;
+}
+
+.add-project, .project {
+    font-size: 0.98rem;
+    border-radius: 5px;
+    padding-left: 0;
+}
+
+.add-project > .plus-icon {
+    width: 22px;
+}
+
+.delete-icon {
+    width: 20px;
+}
+
+.project {
+    font-weight: 400;
+    padding-left: 10px;
     justify-content: space-between;
+}
+
+.add-task > span {
+    padding-left: 8px;
+}
+
+.details:hover {
+    cursor: pointer;
+}
+
+.sidebar-tab:hover {
+    padding: 3px 0;
+    padding-left: 2px;
+    border-radius: 5px;
 }
