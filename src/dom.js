@@ -62,3 +62,98 @@ function createToDoContainer() {
     </div>`
     contentDiv.appendChild(containerDiv);
 }
+
+function createTaskForm() {
+    const todosUL = document.querySelector('.todos');
+    const form = document.createElement('form');
+    form.setAttribute('class', 'todo-form')
+    form.innerHTML = `
+            <div class="title">
+                <label for="title">Title:</label>
+                <input type="text" name="title" id="title" autofocus autocomplete="off" maxlength="43" placeholder="Take the trash out">
+            </div>
+
+            <div class="due-date">
+                <label for="due-date">Due Date</label>
+                <input type="date" name="due-date" id="due-date">
+            </div>
+
+            <div class="priority">
+                <label for="priority">Priority</label>
+                <select name="priority" id="priority">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+
+            <div class="note">
+                <label for="note">Note:</label>
+                <textarea name="note" id="note" cols="90" rows="4" maxlength="580" placeholder="Something extra about taking the trash out"></textarea>
+            </div>
+            <div class="buttons">
+                <button type="button" class="submit">Submit</button>
+                <button type="button" class="cancel">Cancel</button>
+            </div>`;
+    todosUL.appendChild(form)
+    cancelFormBTN(form);
+    submitFormBTN(form);
+}
+
+function cancelFormBTN(form) {
+    const cancelBTN = document.querySelector('.buttons > .cancel');
+    cancelBTN.addEventListener('click', () => {
+        form.remove();
+        createAddTaskDiv();
+    });
+}
+
+function submitFormBTN(form) {
+    const submitBTN = document.querySelector('.buttons > .submit');
+    submitBTN.addEventListener('click', () => {
+        const submittedForm = document.querySelectorAll('.todo-form > div')
+        createTask();
+        form.remove();
+        console.log(submittedForm[0].value)
+        createAddTaskDiv();
+    });
+}
+
+function createAddTaskDiv() {
+    const todosUL = document.querySelector('.todos');
+    const addTaskLI = document.createElement('li');
+    addTaskLI.setAttribute('class', 'add-task');
+    addTaskLI.innerHTML = `<img src="../src/icons/plus.svg" alt="Plus icon" class="plus-icon">
+                           <span>Add task</span>`
+    addTaskLI.addEventListener('click', () => {
+        createTaskForm();
+        addTaskLI.remove();
+    });
+    todosUL.appendChild(addTaskLI);
+}
+
+function createTask(/* title, dueDate, note, priority */) {
+    const todosUL = document.querySelector('.todos');
+    const task = document.createElement('li');
+    task.setAttribute('class', 'task');
+    const form = document.createElement('form');
+    form.setAttribute('class', 'check');
+    form.innerHTML = `<label for="mark-task"></label>
+                      <input type="radio" name="mark-task" id="mark-task">
+                      <span></span>`;
+    const taskTitle = document.createElement('span');
+    taskTitle.innerHTML = 'title';
+    form.appendChild(taskTitle);
+    task.appendChild(form);
+    const span = document.createElement('span');
+    const dateSpan = document.createElement('span');
+    const dropDownIcon = document.createElement('img');
+    dateSpan.innerHTML = 'dueDate';
+    dropDownIcon.setAttribute('src', '../src/icons/triangle-down.png');
+    dropDownIcon.setAttribute('alt', 'Drop down icon');
+    dropDownIcon.setAttribute('class', 'details');
+    span.appendChild(dateSpan);
+    span.appendChild(dropDownIcon);
+    task.appendChild(span);
+    todosUL.appendChild(task);
+}
