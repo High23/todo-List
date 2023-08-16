@@ -1,6 +1,6 @@
-export {createTask}
+export {createTask, getTaskID}
 
-function createTask(title, dueDate, priority, note) {
+function createTask(title, dueDate, priority, note, id) {
     const todosUL = document.querySelector('.todos');
     const task = document.createElement('li');
     task.setAttribute('class', 'task');
@@ -25,7 +25,6 @@ function createTask(title, dueDate, priority, note) {
     span.appendChild(taskDropDownIcon);
     task.appendChild(span);
     todosUL.appendChild(task);
-    let id = getTaskID();
     task.setAttribute('data-task-number', id);
     createDetails(priority, note, id, taskDropDownIcon);
 }
@@ -45,7 +44,7 @@ function viewDetails(taskDropDownIcon, taskLI) {
 
 function getTaskID() {
     const tasks = document.querySelectorAll('.task');
-    return tasks.length - 1;
+    return tasks.length;
 }
 
 function deleteDetails(taskLI) {
@@ -53,6 +52,7 @@ function deleteDetails(taskLI) {
 }
 
 function createDetails(priority, note, id, taskDropDownIcon) {
+    // This loop simply gets the correct task li element
     let taskLI = document.querySelectorAll('.task');
     for (let i = 0; i < taskLI.length; i++) {
         if (Number(taskLI[i].dataset.taskNumber) === id){
