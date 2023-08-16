@@ -32,3 +32,16 @@ function checkIfProjectIsInStorage(projectName) {
         }
     }
 }
+
+function addToDoToProjectStorage(todo, projectName) {
+    let projects = JSON.parse(localStorage.getItem('projects'));
+    const projectsLI = document.querySelectorAll('.project');
+    projectsLI.forEach((project, projectIndex) => {
+        project = project.childNodes[0].textContent
+        if (projectName === project) {
+            projects[projectIndex][[projectName]].push(todo);
+        }
+    });
+    
+    localStorage.setItem('projects', JSON.stringify(projects));
+}
