@@ -21,3 +21,14 @@ function addProjectToStorage(projectName) {
     projects.push({[projectName]: []})
     localStorage.setItem('projects', JSON.stringify(projects))
 }
+
+function checkIfProjectIsInStorage(projectName) {
+    let projects = JSON.parse(localStorage.getItem('projects'));
+    for (let i = 0; i < projects.length; i++){
+        if (projects[i].hasOwnProperty(projectName)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
