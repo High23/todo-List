@@ -1,6 +1,7 @@
-import {parseTaskFormData} from "./app";
+import {CreateToDo} from "./app";
 import {createAddProjectLI} from "./project";
-import {createTask} from "./ToDo";
+import {createTask, getTaskID} from "./ToDo";
+import { addToDoToInbox, addToDoToProjectStorage } from "./storage";
 
 const contentDiv = document.getElementById("content");
 
@@ -114,8 +115,13 @@ function submitFormBTN(form) {
     const submitBTN = document.querySelector('.buttons > .submit');
     submitBTN.addEventListener('click', () => {
         const submittedForm = document.querySelectorAll('.todo-form > div');
-        const ToDo = parseTaskFormData(submittedForm);
-        createTask(ToDo.titleName, ToDo.dueDate, ToDo.priority, ToDo.note);
+        const tab = document.querySelector('.title-of-tab').textContent;
+        const ToDo = CreateToDo(submittedForm, getTaskID());
+        createTask(ToDo.titleName, ToDo.dueDate, ToDo.priority, ToDo.note, ToDo.id);
+        if (tab === 'Inbox')
+            addToDoToInbox(ToDo);
+        else 
+            addToDoToProjectStorage(ToDo, tab);
         form.remove();
         createAddTaskDiv();
     });
