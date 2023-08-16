@@ -1,4 +1,4 @@
-export { setLocalStorageItemsOnPageLoad, addToDoToInbox }
+export { setLocalStorageItemsOnPageLoad, addToDoToInbox, addToDoToProjectStorage, addProjectToStorage, checkIfProjectIsInStorage}
 
 function setLocalStorageItemsOnPageLoad() {
     localStorage.setItem('high', 'red');
