@@ -15,3 +15,9 @@ function addToDoToInbox(todo) {
     inbox.push(todo)
     localStorage.setItem("inbox", JSON.stringify(inbox))
 }
+
+function addProjectToStorage(projectName) {
+    let projects = JSON.parse(localStorage.getItem('projects'));
+    projects.push({[projectName]: []})
+    localStorage.setItem('projects', JSON.stringify(projects))
+}
