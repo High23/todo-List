@@ -1,4 +1,8 @@
-export { setLocalStorageItemsOnPageLoad, addToDoToInbox, addToDoToProjectStorage, addProjectToStorage, checkIfProjectIsInStorage}
+import { createTask } from "./ToDo";
+import { createAddTaskDiv, deleteAddTaskDiv } from "./UI";
+import { createAddProjectLI, createProject, deleteAddProjectLI } from "./project";
+
+export { setLocalStorageItemsOnPageLoad, addToDoToInbox, addToDoToProjectStorage, addProjectToStorage, checkIfProjectExists, checkLocalStorageOnPageLoad, loadTodos}
 
 function setLocalStorageItemsOnPageLoad() {
     localStorage.setItem('high', 'red');
@@ -22,7 +26,7 @@ function addProjectToStorage(projectName) {
     localStorage.setItem('projects', JSON.stringify(projects))
 }
 
-function checkIfProjectIsInStorage(projectName) {
+function checkIfProjectExists(projectName) {
     let projects = JSON.parse(localStorage.getItem('projects'));
     for (let i = 0; i < projects.length; i++){
         if (projects[i].hasOwnProperty(projectName)){
@@ -44,4 +48,33 @@ function addToDoToProjectStorage(todo, projectName) {
     });
     
     localStorage.setItem('projects', JSON.stringify(projects));
+}
+
+function checkLocalStorageOnPageLoad() {
+    const projects = JSON.parse(localStorage.getItem('projects'));
+    if (Boolean(projects[0])) {
+        loadProjects(projects)
+    }
+    const inbox = JSON.parse(localStorage.getItem('inbox'));
+    if (Boolean(inbox[0])) {
+        loadTodos(inbox);
+    }
+}
+
+function loadProjects(projects) {
+    deleteAddProjectLI();
+    for (let i = 0; i < projects.length; i++) {
+        let projectName = Object.getOwnPropertyNames(projects[i])[0];
+        createProject(projectName);
+        // projects[i][[projectName]]
+    }
+    createAddProjectLI();
+}
+
+function loadTodos(storage) {
+    deleteAddTaskDiv();
+    for (let i = 0; i < storage.length ; i++) {
+        createTask(storage[i].titleName, storage[i].dueDate, storage[i].priority, storage[i].note, storage[i].id);
+    }
+    createAddTaskDiv()
 }
