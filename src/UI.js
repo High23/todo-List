@@ -3,6 +3,8 @@ import {createAddProjectLI} from "./project";
 import {createTask, getTaskID} from "./ToDo";
 import { addToDoToInbox, addToDoToProjectStorage } from "./storage";
 
+export {createAddTaskDiv, deleteAddTaskDiv, clearTab}
+
 const contentDiv = document.getElementById("content");
 
 
@@ -58,11 +60,8 @@ function createToDoContainer() {
     const containerDiv = document.createElement('div');
     containerDiv.setAttribute('class', 'todos-container');
     containerDiv.innerHTML = `
-    <div class="todos-container">
         <div class="title-of-tab">Inbox</div>
-        <ul class="todos">
-        </ul>
-    </div>`
+        <ul class="todos"></ul>`
     contentDiv.appendChild(containerDiv);
 }
 
@@ -135,7 +134,19 @@ function createAddTaskDiv() {
                            <span>Add task</span>`
     addTaskLI.addEventListener('click', () => {
         createTaskForm();
-        addTaskLI.remove();
+        deleteAddTaskDiv();
     });
     todosUL.appendChild(addTaskLI);
+}
+
+function deleteAddTaskDiv() {
+    const addTaskLI = document.querySelector('li.add-task');
+    addTaskLI.remove()
+}
+
+function clearTab() {
+    const tasks = document.querySelectorAll('.task');
+    tasks.forEach((task) => {
+        task.remove()
+    });
 }
