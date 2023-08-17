@@ -1,8 +1,9 @@
 import './app';
-import { setLocalStorageItemsOnPageLoad } from './storage';
-import './inbox';
+import { setLocalStorageItemsOnPageLoad, checkLocalStorageOnPageLoad } from './storage';
+import './tabs';
 import './project';
 import './ToDo';
 import './UI';
 
 setLocalStorageItemsOnPageLoad();
+checkLocalStorageOnPageLoad();
