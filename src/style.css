@@ -13,6 +13,8 @@
     --emerald300: #6ee7b7;
     --red400: #f87171;
     --red500: #ef4444;
+    --sky400: #38bdf8;
+    --sky500: #0ea5e9;
     --light-gray-tp: rgba(136, 136, 136, 0.445);
 }
 
@@ -83,7 +85,7 @@ label[for="note"] {
 .buttons {
     display: flex;
     align-items: flex-end;
-    gap: 20px;
+    gap: 14px;
 }
 
 .title-of-tab {
@@ -118,16 +120,16 @@ input:hover, textarea:hover {
     border-color: black;
 }
 
-.submit, .cancel {
+button {
     padding: 5px 15px;
 }
 
-.submit {
+.submit, .edit {
     background-color: var(--green400);
     border-radius: 10px;
 }
 
-.cancel {
+.cancel, .delete {
     background-color: var(--red500);
     border-radius: 10px;
 }
@@ -136,7 +138,7 @@ input:hover, textarea:hover {
     background-color: var(--green300);
 }
 
-.cancel:active {
+.cancel:active, .delete:active {
     background-color: var(--red400);
 }
 
@@ -170,7 +172,7 @@ input:hover, textarea:hover {
     font-weight: 500;
 }
 
-.task {
+.task, .project {
     display: grid;
     grid-template-columns: 1fr auto;
     justify-content: space-between;
@@ -216,14 +218,16 @@ input[type="radio"]:checked {
 
 .check > span {
     padding-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-
 
 .plus-icon {
     width: 22px;
 }
 
-.add-task, .add-project, .project {
+.add-task, .add-project {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -235,7 +239,8 @@ input[type="radio"]:checked {
 
 .add-task:hover,
 .add-project:hover,
-.sidebar-tab:hover {
+.sidebar-tab:hover,
+.project > span:hover {
     background-color: var(--light-gray-tp);
     cursor: pointer;
 }
@@ -284,8 +289,9 @@ input[type="radio"]:checked {
 
 .project {
     font-weight: 400;
-    padding-left: 10px;
-    justify-content: space-between;
+    padding-bottom: 6px;
+    border-radius: 0;
+    gap: 5px;
 }
 
 .add-task > span {
@@ -309,8 +315,8 @@ input[type="radio"]:checked {
     justify-content: space-between;
 }
 
-.edit {
-    grid-column-start: 2;
+.edit, .delete {
+    width: 100%;
 }
 
 .note-span {
@@ -318,10 +324,38 @@ input[type="radio"]:checked {
 }
 
 .priority-edit-container {
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+}
+
+.project > span {
+    width: 140px;
+    padding: 3px 0;
+    padding-left: 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.title-of-tab > span {
+    font-size: 0.8rem;
+    padding-left: 10px;
+    color: var(--zinc600);
+}
+
+.project-drop-down-buttons {
+    display: flex;
+    grid-column: 1/2;
+}
+
+.edit {
+    background-color: var(--sky500)
+}
+
+.edit:active {
+    background-color: var(--sky400)
 }
 
 .hidden {
