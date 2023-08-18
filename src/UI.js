@@ -2,6 +2,7 @@ import {CreateToDo} from "./app";
 import {createAddProjectLI} from "./project";
 import {createTask, getTaskID} from "./ToDo";
 import { addToDoToInbox, addToDoToProjectStorage } from "./storage";
+import { inboxTab, todayTab, weekTab, monthTab} from "./tabs";
 
 export {createAddTaskDiv, deleteAddTaskDiv, clearTab}
 
@@ -16,6 +17,10 @@ function createLayout() {
     createHeader();
     createSidebar();
     createToDoContainer();
+    inboxTab();
+    todayTab();
+    weekTab();
+    monthTab();
 }
 
 function createHeader() {
@@ -32,19 +37,19 @@ function createSidebar() {
     sidebarDiv.innerHTML = `
     <div class="sidebar">
         <ul class="tabs">
-            <li class="sidebar-tab">
+            <li class="sidebar-tab inbox">
                 <img src="../src/icons/inbox-outline.png" alt="Inbox icon" class="sidebar-icon"> 
                 Inbox
             </li>
-            <li class="sidebar-tab">
+            <li class="sidebar-tab today">
                 <img src="../src/icons/calendar-today-outline.png" alt="A calendar with a day highlighted" class="sidebar-icon">
                 Today
             </li>
-            <li class="sidebar-tab">
+            <li class="sidebar-tab week">
                 <img src="../src/icons/calendar-week-outline.png" alt="A calendar with a week highlighted" class="sidebar-icon">
                 This Week
             </li>
-            <li class="sidebar-tab">
+            <li class="sidebar-tab month">
                 <img src="../src/icons/calendar-month-outline.png" alt="A calendar with a week highlighted" class="sidebar-icon">
                 This Month
             </li>
@@ -72,7 +77,7 @@ function createTaskForm() {
     form.innerHTML = `
             <div class="title">
                 <label for="title">Title:</label>
-                <input type="text" name="title" id="title" autofocus autocomplete="off" maxlength="43" placeholder="Take the trash out">
+                <input type="text" name="title" id="title" autofocus autocomplete="off" maxlength="50" placeholder="Take the trash out">
             </div>
 
             <div class="due-date">
@@ -141,6 +146,11 @@ function createAddTaskDiv() {
 
 function deleteAddTaskDiv() {
     const addTaskLI = document.querySelector('li.add-task');
+    if (!(addTaskLI)){
+        createAddTaskDiv();
+        deleteAddTaskDiv();
+        return;
+    }
     addTaskLI.remove()
 }
 
