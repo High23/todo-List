@@ -52,29 +52,33 @@ function monthTab() {
 
 function getTabToDos(tabName) {
     const inbox = JSON.parse(localStorage.getItem('inbox'));
-    const projects = JSON.parse(localStorage.getItem('projects'))
+    const projects = JSON.parse(localStorage.getItem('projects'));
+    if (Boolean(inbox[0]) === false && Boolean(projects[0]) === false) return;
     for (let i = 0; i < inbox.length; i++) {
         if (isToday(new Date(inbox[i].dueDate)) && tabName === 'Today') {
             createTask(inbox[i].titleName, 
                 inbox[i].dueDate, 
                 inbox[i].priority, 
                 inbox[i].note, 
-                inbox[i].id)
+                inbox[i].id,
+                '(Inbox)')
         } else if (isThisWeek(new Date(inbox[i].dueDate)) && tabName === 'Week') {
             createTask(inbox[i].titleName, 
                 inbox[i].dueDate, 
                 inbox[i].priority, 
                 inbox[i].note, 
-                inbox[i].id)
-        } else if (isThisMonth(new Date(inbox[i].dueDate)) && tabName === ' Month') {
+                inbox[i].id,
+                '(Inbox)')
+        } else if (isThisMonth(new Date(inbox[i].dueDate)) && tabName === 'Month') {
             createTask(inbox[i].titleName, 
                 inbox[i].dueDate, 
                 inbox[i].priority, 
                 inbox[i].note, 
-                inbox[i].id)
+                inbox[i].id,
+                '(Inbox)')
         }
     }
-
+    if (Boolean(projects[0]) === false) return;
     for (let i = 0; i < projects.length; i++) {
         let projectName = Object.getOwnPropertyNames(projects[i])[0];
         let project = projects[i][[projectName]]
@@ -84,19 +88,22 @@ function getTabToDos(tabName) {
                             todo.dueDate, 
                             todo.priority, 
                             todo.note, 
-                            todo.id)
+                            todo.id,
+                            `(${projectName})`)
             } else if (isThisWeek(new Date(todo.dueDate)) && tabName === 'Week') {
                 createTask(todo.titleName,
                             todo.dueDate, 
                             todo.priority, 
                             todo.note, 
-                            todo.id)
+                            todo.id,
+                            `(${projectName})`)
             } else if (isThisMonth(new Date(todo.dueDate)) && tabName === 'Month') {
                 createTask(todo.titleName,
                             todo.dueDate, 
                             todo.priority, 
                             todo.note, 
-                            todo.id)
+                            todo.id,
+                            `(${projectName})`)
             }
         });
     }
@@ -119,6 +126,8 @@ function adjustTabInfo(tabName) {
         span.innerHTML = `${format(startOfWeek(new Date()), 'MM/dd')} - ${format(endOfWeek(new Date()), 'MM/dd')}`
         tabTitle.appendChild(span);
     } else if (tabName === 'Month') {
-        tabTitle.innerHTML = `${format(new Date(), 'MMMM')}`
-    }    
+        tabTitle.innerHTML = `This ${tabName}`
+        span.innerHTML = `${format(new Date(), 'MMMM')}`;
+        tabTitle.appendChild(span)
+    }
 }
