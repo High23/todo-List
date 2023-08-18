@@ -3,7 +3,7 @@ import { clearTab, deleteAddTaskDiv } from "./UI";
 import { loadTodos } from "./storage";
 import {format, isToday, isThisWeek, isThisMonth, startOfWeek, endOfWeek} from "date-fns";
 
-export {inboxTab, todayTab, weekTab, monthTab}
+export {inboxTab, todayTab, weekTab, monthTab, switchTab}
 
 function inboxTab() {
     const inboxTab = document.querySelector('.inbox');
@@ -47,6 +47,14 @@ function monthTab() {
         getTabToDos(tabName)
         adjustTabInfo(tabName)
     })
+}
+
+function switchTab() {
+    const tabTitle = document.querySelector('.title-of-tab');
+    tabTitle.innerHTML = 'Inbox'
+    clearTab();
+    const inbox = JSON.parse(localStorage.getItem('inbox'));
+    loadTodos(inbox);
 }
 
 
