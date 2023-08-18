@@ -1,6 +1,6 @@
 export {createTask, getTaskID}
 
-function createTask(title, dueDate, priority, note, id) {
+function createTask(title, dueDate, priority, note, id, origin = '') {
     const todosUL = document.querySelector('.todos');
     const task = document.createElement('li');
     task.setAttribute('class', 'task');
@@ -10,14 +10,19 @@ function createTask(title, dueDate, priority, note, id) {
                       <input type="radio" name="mark-task" id="mark-task">`
     const taskTitle = document.createElement('span');
     taskTitle.innerHTML = title;
+    const originSpan = document.createElement('span');
+    originSpan.innerHTML = origin;
+    originSpan.setAttribute('class', 'origin');
     // Sets the todo's check mark border-color based on priority
     form.childNodes[2].style['border-color'] = localStorage.getItem(priority);
     form.appendChild(taskTitle);
+    form.appendChild(originSpan);
     task.appendChild(form);
     const span = document.createElement('span');
     const dateSpan = document.createElement('span');
-    const taskDropDownIcon = document.createElement('img');
+    dateSpan.setAttribute('class', 'date');
     dateSpan.innerHTML = dueDate;
+    const taskDropDownIcon = document.createElement('img');
     taskDropDownIcon.setAttribute('src', '../src/icons/triangle-down.png');
     taskDropDownIcon.setAttribute('alt', 'Drop down icon');
     taskDropDownIcon.setAttribute('class', 'details');
@@ -71,9 +76,9 @@ function createDetails(priority, note, id, taskDropDownIcon) {
                     <button class="delete">Delete</button>`
     details.appendChild(div)
     taskLI.appendChild(details);
-    const noteText = document.querySelectorAll('textarea.note-span');
-    noteText[id].innerHTML = `Note: ${note}`;
-    const prioritySpan = document.querySelectorAll('.priority-edit-container > span');
-    prioritySpan[id].innerHTML = `Priority: ${priority}`;
+    const noteText = taskLI.childNodes[2].childNodes[0];
+    noteText.innerHTML = `Note: ${note}`;
+    const prioritySpan = taskLI.childNodes[2].childNodes[1].childNodes[0];
+    prioritySpan.innerHTML = `Priority: ${priority}`;
     viewDetails(taskDropDownIcon, taskLI);
 }
