@@ -194,7 +194,8 @@ function newNameSubmitBTN(projectNameForm, projectLI, id) {
             projectLI.childNodes[0].classList.toggle('hidden')
             projectLI.childNodes[1].classList.toggle('hidden')
             projectLI.childNodes[1].setAttribute('src', '../src/icons/triangle-down.png');
-            insertNewProjectName(projectNameForm, projectLI, id)
+            insertNewProjectName(projectNameForm, projectLI, id);
+            switchTab()
         }
     });
 }
