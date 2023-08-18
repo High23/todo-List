@@ -1,5 +1,6 @@
-import { checkIfProjectExists, addProjectToStorage, loadInbox } from "./storage";
+import { checkIfProjectExists, addProjectToStorage, loadTodos } from "./storage";
 import { clearTab } from "./UI";
+import { switchTab } from "./tabs";
 
 export {createAddProjectLI, createProject, deleteAddProjectLI};
 
@@ -42,13 +43,17 @@ function createProject(title) {
     projectDropDownIcon.setAttribute('class', 'details');
     projectLI.appendChild(projectName);
     projectLI.appendChild(projectDropDownIcon);
-    projectsUl.append(projectLI);
-    projectLI.setAttribute('data-project-id', setProjectID());
     projectName.innerHTML = title;
-    projectLI.addEventListener('click', () => {
+    projectsUl.append(projectLI);
+    const projectID = document.querySelectorAll('.project').length - 1;
+    projectLI.setAttribute('data-project-id', projectID);
+    projectName.addEventListener('click', () => {
         clearTab()
+        title = projectName.innerHTML
         openProject(title, projectLI);
     });
+    
+    createProjectDetails(projectID, projectDropDownIcon, projectLI)
 }
 
 function cancelProjectNameForm(projectNameForm) {
@@ -74,9 +79,8 @@ function submitProjectNameForm(projectNameForm) {
     });
 }
 
-function setProjectID() {
-    const id = document.querySelectorAll('.project').length - 1;
-    return id;
+function getProjectID(projectLI) {
+    return Number(projectLI.dataset.projectId);
 }
 
 function openProject(title, projectLI) {
@@ -84,7 +88,7 @@ function openProject(title, projectLI) {
     tabTitle.innerHTML = title;
     let projects = JSON.parse(localStorage.getItem('projects'));
     let projectIndex = projectLI.dataset.projectId
-    loadInbox(projects[projectIndex][[title]])
+    loadTodos(projects[projectIndex][[title]])
 }
 
 function deleteAddProjectLI() {
@@ -92,6 +96,133 @@ function deleteAddProjectLI() {
     addProjectLI.remove()
 }
 
-function getProjectToDos(title) {
+function createProjectDetails(id, dropDownIcon) {
+    let projectLI = returnProperProjectLI(id)
+    const projects = document.querySelectorAll('.project');
+    const div = document.createElement('div');
+    div.classList.add('project-drop-down-buttons', 'hidden');
+    const editBTN = document.createElement('button');
+    editBTN.innerHTML = 'Edit';
+    editBTN.setAttribute('class', 'edit');
+    const deleteBTN = document.createElement('button');
+    deleteBTN.innerHTML = 'Delete';
+    deleteBTN.setAttribute('class', 'delete');
+    div.appendChild(editBTN);
+    div.appendChild(deleteBTN);
+    projects[id].appendChild(div);
+    viewProjectDetails(dropDownIcon, projectLI)
+    editBTN.addEventListener('click', () => {
+        id = getProjectID(projectLI)
+        editProjectNameForm(id)
+    });
+    deleteBTN.addEventListener('click', () => {
+        id = getProjectID(projectLI)
+        deleteProject(id)
+        switchTab()
+    });
+}
 
+function viewProjectDetails(dropDownIcon, projectLI) {
+    dropDownIcon.addEventListener('click', () => {
+        dropDownIcon.setAttribute('src', '../src/icons/triangle.png');
+        if (projectLI.childNodes[2]) {
+            projectLI.childNodes[2].classList.toggle('hidden');
+            if ('hidden' === projectLI.childNodes[2].classList[1]) {
+                dropDownIcon.setAttribute('src', '../src/icons/triangle-down.png');
+            }
+            return;
+        } 
+    });
+}
+
+function editProjectNameForm(id) {
+    let projectLI = returnProperProjectLI(id);
+    const projectNameForm = document.createElement('form');
+    projectNameForm.setAttribute('class', 'create-project');
+    projectNameForm.innerHTML = 
+        `<label for="input-project-name"></label>
+        <input type="text" name="project-name" id="input-project-name" maxlength="20" autocomplete="off" class="new-name-form" required>
+        <div class="project-form-buttons new-name">
+            <button class="submit" type="button">Save</button>
+            <button class="cancel" type="button">Cancel</button>
+        </div>`;
+    toggleHidden(projectLI)
+    projectLI.insertBefore(projectNameForm, projectLI.childNodes[0]);
+    newNameCancelBTN(projectNameForm, projectLI)
+    newNameSubmitBTN(projectNameForm, projectLI, id)  
+}
+
+function deleteProject(id) {
+    let projects = JSON.parse(localStorage.getItem('projects'))
+    let project = returnProperProjectLI(id);
+    project.remove()
+    projects.splice(id, 1)
+    localStorage.setItem('projects', JSON.stringify(projects))
+    updateProjectId()
+}
+
+function returnProperProjectLI(id) {
+    let projectLI = document.querySelectorAll('.project');
+    for (let i = 0; i < projectLI.length; i++) {
+        if (Number(projectLI[i].dataset.projectId) === id){
+            return projectLI[i];
+        }
+    }
+}
+
+function newNameCancelBTN(projectNameForm, projectLI) {
+    const newNameCancelBTN = document.querySelector('.new-name > button.cancel');
+    newNameCancelBTN.addEventListener('click', () => {
+        projectNameForm.remove();
+        toggleHidden(projectLI)
+    });
+}
+
+function newNameSubmitBTN(projectNameForm, projectLI, id) {
+    const newNameSubmitBTN = document.querySelector('.new-name > button.submit');
+    newNameSubmitBTN.addEventListener('click', () => {
+        if (checkIfProjectExists(projectNameForm.childNodes[2].value)) {
+            alert('Projects must have different names')
+            return;
+        } else {
+            
+            if (Boolean(projectNameForm.childNodes[2].value) === false) {
+                alert('Projects must have a name')
+                return;
+            }
+            projectNameForm.remove();
+            projectLI.childNodes[0].classList.toggle('hidden')
+            projectLI.childNodes[1].classList.toggle('hidden')
+            projectLI.childNodes[1].setAttribute('src', '../src/icons/triangle-down.png');
+            insertNewProjectName(projectNameForm, projectLI, id)
+        }
+    });
+}
+
+function insertNewProjectName(projectNameForm, projectLI, id) {
+    let project = JSON.parse(localStorage.getItem('projects'))
+    let projectName = projectLI.childNodes[0].innerHTML
+    let newProjectName = projectNameForm.childNodes[2].value
+    const newProject = {[newProjectName]: []}
+    for (let i = 0; i < project[id][projectName].length; i++) {
+        newProject[newProjectName].push(project[id][[projectName]][i])
+    }
+    project.splice(id, 1);
+    project.splice(id, 0, newProject);
+    localStorage.setItem('projects', JSON.stringify(project))
+    projectLI.childNodes[0].innerHTML = projectNameForm.childNodes[2].value;
+}
+
+function toggleHidden(projectLI) {
+    for (let i = 0; i < projectLI.childNodes.length; i++) {
+        projectLI.childNodes[i].classList.toggle('hidden')
+    }
+}
+
+function updateProjectId() {
+    const projectLIs = document.querySelectorAll('.project')
+    if (projectLIs === false) return;
+    projectLIs.forEach((project, value) => {
+        project.setAttribute('data-project-id', value)
+    })
 }
