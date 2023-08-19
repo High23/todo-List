@@ -10,7 +10,7 @@ function createAddProjectLI() {
     const projectsUl = document.querySelector('.projects');
     const addProjectLI = document.createElement('li');
     addProjectLI.setAttribute('class', 'add-project')
-    addProjectLI.innerHTML = `<img src="../src/icons/plus.svg" alt="Plus icon" class="plus-icon">
+    addProjectLI.innerHTML = `<img src="./plus.svg" alt="Plus icon" class="plus-icon">
                               <span>Add project</span>`;
     projectsUl.appendChild(addProjectLI);
     addProjectLI.addEventListener('click', () => {
@@ -41,7 +41,7 @@ function createProject(title) {
     projectLI.setAttribute('class', 'project');
     const projectNameSpan = document.createElement('span');
     const projectDropDownIcon = document.createElement('img');
-    projectDropDownIcon.setAttribute('src', '../src/icons/triangle-down.png');
+    projectDropDownIcon.setAttribute('src', './triangle-down.png');
     projectDropDownIcon.setAttribute('alt', 'Drop down icon');
     projectDropDownIcon.setAttribute('class', 'details');
     projectLI.appendChild(projectNameSpan);
@@ -128,11 +128,11 @@ function createProjectDetails(id, dropDownIcon) {
 
 function viewProjectDetails(dropDownIcon, projectLI) {
     dropDownIcon.addEventListener('click', () => {
-        dropDownIcon.setAttribute('src', '../src/icons/triangle.png');
+        dropDownIcon.setAttribute('src', './triangle.png');
         if (projectLI.childNodes[2]) {
             projectLI.childNodes[2].classList.toggle('hidden');
             if ('hidden' === projectLI.childNodes[2].classList[1]) {
-                dropDownIcon.setAttribute('src', '../src/icons/triangle-down.png');
+                dropDownIcon.setAttribute('src', './triangle-down.png');
             }
             return;
         } 
@@ -198,7 +198,7 @@ function newNameSubmitBTN(projectNameForm, projectLI, id) {
             projectNameForm.remove();
             projectLI.childNodes[0].classList.toggle('hidden')
             projectLI.childNodes[1].classList.toggle('hidden')
-            projectLI.childNodes[1].setAttribute('src', '../src/icons/triangle-down.png');
+            projectLI.childNodes[1].setAttribute('src', './triangle-down.png');
             insertNewProjectName(projectNameForm, projectLI, id);
             clearTab();
             openProject(projectNameForm.childNodes[2].value, projectLI);
