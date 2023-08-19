@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 
-export {CreateToDo, updateID};
+export {CreateToDo, updateID, hideAllOtherEditBTNs, unHideAllEditBTNs};
 
 
 function CreateToDo(submittedForm) {
@@ -24,3 +24,38 @@ function updateID(element, type='') {
     return Number(element.dataset.id);
 }
 
+function hideAllOtherEditBTNs(clickedButton, type) {
+    if (type === 'task') {
+        const allTasksEditBTN = document.querySelectorAll('.priority-edit-container > .edit');
+        let totalBTNCount = allTasksEditBTN.length
+        for (let i = 0; i < totalBTNCount; i++) {
+            let button = allTasksEditBTN[i];
+            if (!(button === clickedButton)) {
+                button.classList.add('hidden');
+            }
+        }
+    } else if (type === 'project') {
+        const allProjectsEditBTN = document.querySelectorAll('.project-drop-down-buttons > .edit');
+        let totalBTNCount = allProjectsEditBTN.length
+        for (let i = 0; i < totalBTNCount; i++) {
+            let button = allProjectsEditBTN[i];
+            if (!(button === clickedButton)) {
+                button.classList.add('hidden');
+            }
+        }
+    }
+}
+
+function unHideAllEditBTNs(type) {
+    if (type === 'task') {
+        const allTasksEditBTN = document.querySelectorAll('.priority-edit-container > .edit');
+        allTasksEditBTN.forEach((button) => {
+            button.classList.remove('hidden')
+        });
+    } else if (type === 'project') {
+        const allProjectsEditBTN = document.querySelectorAll('.project-drop-down-buttons > .edit');
+        allProjectsEditBTN.forEach((button) => {
+            button.classList.remove('hidden')
+        });
+    }
+}
