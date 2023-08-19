@@ -1,6 +1,6 @@
 import {CreateToDo} from "./app";
 import {createAddProjectLI} from "./project";
-import {createTask, getTaskID} from "./ToDo";
+import {createTask} from "./ToDo";
 import { addToDoToInbox, addToDoToProjectStorage } from "./storage";
 import { inboxTab, todayTab, weekTab, monthTab} from "./tabs";
 
@@ -102,7 +102,7 @@ function createTaskForm() {
                 <button type="button" class="submit">Submit</button>
                 <button type="button" class="cancel">Cancel</button>
             </div>`;
-    todosUL.appendChild(form)
+    todosUL.appendChild(form);
     cancelFormBTN(form);
     submitFormBTN(form);
 }
@@ -120,8 +120,8 @@ function submitFormBTN(form) {
     submitBTN.addEventListener('click', () => {
         const submittedForm = document.querySelectorAll('.todo-form > div');
         const tab = document.querySelector('.title-of-tab').textContent;
-        const ToDo = CreateToDo(submittedForm, getTaskID());
-        createTask(ToDo.titleName, ToDo.dueDate, ToDo.priority, ToDo.note, ToDo.id);
+        const ToDo = CreateToDo(submittedForm);
+        createTask(ToDo.titleName, ToDo.dueDate, ToDo.priority, ToDo.note);
         if (tab === 'Inbox')
             addToDoToInbox(ToDo);
         else 
