@@ -1,5 +1,5 @@
 import { deleteAddTaskDiv, createAddTaskDiv } from "./UI";
-import { CreateToDo, updateID, hideAllOtherEditBTNs, unHideAllEditBTNs } from "./app";
+import { CreateToDo, updateID, hideAllOtherEditBTNs, unHideAllEditBTNs, checkSubmittedForm } from "./app";
 
 export {createTask}
 
@@ -9,15 +9,18 @@ function createTask(title, dueDate, priority, note, origin = '') {
     task.setAttribute('class', 'task');
     const form = document.createElement('form');
     form.setAttribute('class', 'check');
-    form.innerHTML = `<label for="mark-task"></label>
-                      <input type="radio" name="mark-task" id="mark-task">`
+    form.innerHTML = `<label for="mark-task"></label>`
+    const checkMark = document.createElement('input');
+    checkMark.setAttribute('type', 'radio');
+    checkMark.setAttribute('name', 'mark-task');
+    checkMark.setAttribute('id', 'mark-task');
+    checkMark.style['border-color'] = localStorage.getItem(priority);
+    form.append(checkMark);
     const taskTitle = document.createElement('span');
     taskTitle.innerHTML = title;
     const originSpan = document.createElement('span');
     originSpan.innerHTML = origin;
     originSpan.setAttribute('class', 'origin');
-    // Sets the todo's check mark border-color based on priority
-    form.childNodes[2].style['border-color'] = localStorage.getItem(priority);
     form.appendChild(taskTitle);
     form.appendChild(originSpan);
     task.appendChild(form);
@@ -35,6 +38,14 @@ function createTask(title, dueDate, priority, note, origin = '') {
     todosUL.appendChild(task);
     let id = document.querySelectorAll('.task').length - 1;
     task.setAttribute('data-Id', id);
+    let taskLI = returnProperTaskLI(id);
+    checkMark.addEventListener('click', () => {
+        setTimeout(() => {
+            taskLI.remove();
+            deleteToDo(taskLI.dataset.id)
+        }, '1000')
+        updateID(taskLI, 'task');
+    });
     createToDoDetails(priority, note, id, taskDropDownIcon);
 }
 
@@ -56,7 +67,7 @@ function createToDoDetails(priority, note, id, taskDropDownIcon) {
     const details = document.createElement('div');
     details.setAttribute('class', 'view');
     details.classList.add('hidden');
-    details.innerHTML = `<textarea class="note-span" rows="6"></textarea>`
+    details.innerHTML = `<textarea class="note-span" rows="6" readonly></textarea>`
     const div = document.createElement('div');
     div.setAttribute('class', 'priority-edit-container');
     div.innerHTML = `<span></span>`
@@ -139,6 +150,7 @@ function editToDosInfo(taskLI) {
     const todoSaveBTN = document.querySelector('.edit-todo > .submit');
     todoSaveBTN.addEventListener('click', () => {
         const submittedForm = document.querySelectorAll('.todo-form > div');
+        if (!(checkSubmittedForm(submittedForm))) return;
         const tab = document.querySelector('.title-of-tab').textContent;
         const ToDo = CreateToDo(submittedForm);
         let taskIndex = taskLI.dataset.id
