@@ -2,7 +2,9 @@ import { createTask } from "./ToDo";
 import { createAddTaskDiv, deleteAddTaskDiv } from "./UI";
 import { createAddProjectLI, createProject, deleteAddProjectLI } from "./project";
 
-export { setLocalStorageItemsOnPageLoad, addToDoToInbox, addToDoToProjectStorage, addProjectToStorage, checkIfProjectExists, checkLocalStorageOnPageLoad, loadTodos}
+export { setLocalStorageItemsOnPageLoad, addToDoToInbox, addToDoToProjectStorage, 
+    addProjectToStorage, checkIfProjectExists, checkLocalStorageOnPageLoad, 
+    loadTodos, loadProjects, checkIfToDoExistsInProjectOrInbox}
 
 function setLocalStorageItemsOnPageLoad() {
     localStorage.setItem('high', 'red');
@@ -37,6 +39,36 @@ function checkIfProjectExists(projectName) {
     }
 }
 
+function checkIfToDoExistsInProjectOrInbox(ToDoName, origin) {
+    if (origin === 'Inbox') {
+        let inbox = JSON.parse(localStorage.getItem('inbox'));
+        if (Boolean(inbox[0]) === false) return;
+        for (let i = 0; i < inbox.length; i++){
+            if (inbox[i].titleName === ToDoName) {
+                return true
+            }
+        }
+    } else {
+        let projects = JSON.parse(localStorage.getItem('projects'));
+        let projectID = undefined;
+        const projectLIs = document.querySelectorAll('.project');
+        projectLIs.forEach((project) => {
+            let projectName = project.childNodes[0].textContent;
+            if (projectName === origin) {
+                projectID = project.dataset.id
+            }
+        });
+        if (Boolean(projects[projectID][[origin]][0]) === false) return;
+        for (let i = 0; i < projects[projectID][[origin]].length; i++) {
+            let todo = projects[projectID][[origin]][i];
+            if (todo.titleName === ToDoName) {
+                return true;
+            }
+        }       
+    }
+    
+}
+
 function addToDoToProjectStorage(todo, projectName) {
     let projects = JSON.parse(localStorage.getItem('projects'));
     const projectsLI = document.querySelectorAll('.project');
@@ -66,7 +98,6 @@ function loadProjects(projects) {
     for (let i = 0; i < projects.length; i++) {
         let projectName = Object.getOwnPropertyNames(projects[i])[0];
         createProject(projectName);
-        // projects[i][[projectName]]
     }
     createAddProjectLI();
 }
@@ -74,7 +105,7 @@ function loadProjects(projects) {
 function loadTodos(storage) {
     deleteAddTaskDiv();
     for (let i = 0; i < storage.length ; i++) {
-        createTask(storage[i].titleName, storage[i].dueDate, storage[i].priority, storage[i].note, storage[i].id);
+        createTask(storage[i].titleName, storage[i].dueDate, storage[i].priority, storage[i].note);
     }
     createAddTaskDiv()
 }
