@@ -67,22 +67,19 @@ function getTabToDos(tabName) {
             createTask(inbox[i].titleName, 
                 inbox[i].dueDate, 
                 inbox[i].priority, 
-                inbox[i].note, 
-                inbox[i].id,
+                inbox[i].note,
                 '(Inbox)')
         } else if (isThisWeek(new Date(inbox[i].dueDate)) && tabName === 'Week') {
             createTask(inbox[i].titleName, 
                 inbox[i].dueDate, 
                 inbox[i].priority, 
-                inbox[i].note, 
-                inbox[i].id,
+                inbox[i].note,
                 '(Inbox)')
         } else if (isThisMonth(new Date(inbox[i].dueDate)) && tabName === 'Month') {
             createTask(inbox[i].titleName, 
                 inbox[i].dueDate, 
                 inbox[i].priority, 
-                inbox[i].note, 
-                inbox[i].id,
+                inbox[i].note,
                 '(Inbox)')
         }
     }
@@ -95,22 +92,19 @@ function getTabToDos(tabName) {
                 createTask(todo.titleName, 
                             todo.dueDate, 
                             todo.priority, 
-                            todo.note, 
-                            todo.id,
+                            todo.note,
                             `(${projectName})`)
             } else if (isThisWeek(new Date(todo.dueDate)) && tabName === 'Week') {
                 createTask(todo.titleName,
                             todo.dueDate, 
                             todo.priority, 
-                            todo.note, 
-                            todo.id,
+                            todo.note,
                             `(${projectName})`)
             } else if (isThisMonth(new Date(todo.dueDate)) && tabName === 'Month') {
                 createTask(todo.titleName,
                             todo.dueDate, 
                             todo.priority, 
-                            todo.note, 
-                            todo.id,
+                            todo.note,
                             `(${projectName})`)
             }
         });
