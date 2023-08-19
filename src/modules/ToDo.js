@@ -29,7 +29,7 @@ function createTask(title, dueDate, priority, note, origin = '') {
     dateSpan.setAttribute('class', 'date');
     dateSpan.innerHTML = dueDate;
     const taskDropDownIcon = document.createElement('img');
-    taskDropDownIcon.setAttribute('src', './triangle-down.png');
+    taskDropDownIcon.setAttribute('src', './icons/triangle-down.png');
     taskDropDownIcon.setAttribute('alt', 'Drop down icon');
     taskDropDownIcon.setAttribute('class', 'details');
     span.appendChild(dateSpan);
@@ -51,11 +51,11 @@ function createTask(title, dueDate, priority, note, origin = '') {
 
 function viewToDoDetails(taskDropDownIcon, taskLI) {
     taskDropDownIcon.addEventListener('click', () => {
-        taskDropDownIcon.setAttribute('src', './triangle.png');
+        taskDropDownIcon.setAttribute('src', './icons/triangle.png');
         if (taskLI.childNodes[2]) {
             taskLI.childNodes[2].classList.toggle('hidden');
             if ('hidden' === taskLI.childNodes[2].classList[1]) {
-                taskDropDownIcon.setAttribute('src', './triangle-down.png');
+                taskDropDownIcon.setAttribute('src', './icons/triangle-down.png');
             }
             return;
         } 
@@ -178,7 +178,7 @@ function editToDosInfo(taskLI) {
         const view = taskLI.childNodes[2];
         const details = taskLI.childNodes[1].childNodes[1];
         view.classList.add('hidden');
-        details.setAttribute('src', './triangle-down.png');
+        details.setAttribute('src', './icons/triangle-down.png');
         form.remove();
         createAddTaskDiv();
         unHideAllEditBTNs('task');
@@ -189,7 +189,7 @@ function editToDosInfo(taskLI) {
         const view = taskLI.childNodes[2];
         const details = taskLI.childNodes[1].childNodes[1];
         view.classList.add('hidden');
-        details.setAttribute('src', './triangle-down.png');
+        details.setAttribute('src', './icons/triangle-down.png');
         form.remove();
         createAddTaskDiv();
         unHideAllEditBTNs('task');

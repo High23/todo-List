@@ -22,7 +22,7 @@ function createLayout() {
 function createHeader() {
     const headerDiv = document.createElement('div')
     headerDiv.setAttribute('class', 'header');
-    headerDiv.innerHTML = `<img src="./list-box-outline.svg" alt="Header icon that resembles a checklist" class="header-icon"> 
+    headerDiv.innerHTML = `<img src="./icons/list-box-outline.svg" alt="Header icon that resembles a checklist" class="header-icon"> 
                             ToDo List`
     contentDiv.appendChild(headerDiv);
 }
@@ -34,19 +34,19 @@ function createSidebar() {
     <div class="sidebar">
         <ul class="tabs">
             <li class="sidebar-tab inbox">
-                <img src="./inbox-outline.png" alt="Inbox icon" class="sidebar-icon"> 
+                <img src="./icons/inbox-outline.png" alt="Inbox icon" class="sidebar-icon"> 
                 Inbox
             </li>
             <li class="sidebar-tab today">
-                <img src="./calendar-today-outline.png" alt="A calendar with a day highlighted" class="sidebar-icon">
+                <img src="./icons/calendar-today-outline.png" alt="A calendar with a day highlighted" class="sidebar-icon">
                 Today
             </li>
             <li class="sidebar-tab week">
-                <img src="./calendar-week-outline.png" alt="A calendar with a week highlighted" class="sidebar-icon">
+                <img src="./icons/calendar-week-outline.png" alt="A calendar with a week highlighted" class="sidebar-icon">
                 This Week
             </li>
             <li class="sidebar-tab month">
-                <img src="./calendar-month-outline.png" alt="A calendar with a week highlighted" class="sidebar-icon">
+                <img src="./icons/calendar-month-outline.png" alt="A calendar with a week highlighted" class="sidebar-icon">
                 This Month
             </li>
         </ul>
@@ -142,7 +142,7 @@ function createAddTaskDiv() {
     const todosUL = document.querySelector('.todos');
     const addTaskLI = document.createElement('li');
     addTaskLI.setAttribute('class', 'add-task');
-    addTaskLI.innerHTML = `<img src="./plus.svg" alt="Plus icon" class="plus-icon">
+    addTaskLI.innerHTML = `<img src="./icons/plus.svg" alt="Plus icon" class="plus-icon">
                            <span>Add task</span>`
     addTaskLI.addEventListener('click', () => {
         toggleAllTasksEditBTNs('hide')
