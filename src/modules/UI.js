@@ -3,6 +3,7 @@ import {createAddProjectLI} from "./project";
 import {createTask} from "./ToDo";
 import { addToDoToInbox, addToDoToProjectStorage, checkIfToDoExistsInProjectOrInbox } from "./storage";
 import { inboxTab, todayTab, weekTab, monthTab} from "./tabs";
+import '../style.css'
 
 export {createAddTaskDiv, deleteAddTaskDiv, clearTab, createLayout}
 

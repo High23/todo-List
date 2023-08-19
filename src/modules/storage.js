@@ -1,6 +1,7 @@
 import { createTask } from "./ToDo";
 import { createAddTaskDiv, deleteAddTaskDiv } from "./UI";
 import { createAddProjectLI, createProject, deleteAddProjectLI } from "./project";
+import '../style.css'
 
 export { setLocalStorageItemsOnPageLoad, addToDoToInbox, addToDoToProjectStorage, 
     addProjectToStorage, checkIfProjectExists, checkLocalStorageOnPageLoad, 

@@ -2,6 +2,7 @@ import { checkIfProjectExists, addProjectToStorage, loadTodos } from "./storage"
 import { clearTab } from "./UI";
 import { switchTab } from "./tabs";
 import {updateID, hideAllOtherEditBTNs, unHideAllEditBTNs, toggleAllProjectsEditBTNs} from "./app";
+import '../style.css'
 
 export {createAddProjectLI, createProject, deleteAddProjectLI};
 
