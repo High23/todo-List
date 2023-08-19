@@ -4,14 +4,10 @@ import {createTask} from "./ToDo";
 import { addToDoToInbox, addToDoToProjectStorage, checkIfToDoExistsInProjectOrInbox } from "./storage";
 import { inboxTab, todayTab, weekTab, monthTab} from "./tabs";
 
-export {createAddTaskDiv, deleteAddTaskDiv, clearTab}
+export {createAddTaskDiv, deleteAddTaskDiv, clearTab, createLayout}
 
 const contentDiv = document.getElementById("content");
 
-
-createLayout();
-createAddTaskDiv();
-createAddProjectLI();
 
 function createLayout() {
     createHeader();
@@ -59,6 +55,7 @@ function createSidebar() {
         </ul>
     </div>`
     contentDiv.appendChild(sidebarDiv);
+    createAddProjectLI();
 }
 
 function createToDoContainer() {
@@ -68,6 +65,7 @@ function createToDoContainer() {
         <div class="title-of-tab">Inbox</div>
         <ul class="todos"></ul>`
     contentDiv.appendChild(containerDiv);
+    createAddTaskDiv();
 }
 
 function createTaskForm() {
