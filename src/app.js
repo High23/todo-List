@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 
-export {CreateToDo, updateID, hideAllOtherEditBTNs, unHideAllEditBTNs};
+export {CreateToDo, updateID, hideAllOtherEditBTNs, unHideAllEditBTNs, toggleAllTasksEditBTNs, toggleAllProjectsEditBTNs};
 
 
 function CreateToDo(submittedForm) {
@@ -54,6 +54,32 @@ function unHideAllEditBTNs(type) {
         });
     } else if (type === 'project') {
         const allProjectsEditBTN = document.querySelectorAll('.project-drop-down-buttons > .edit');
+        allProjectsEditBTN.forEach((button) => {
+            button.classList.remove('hidden')
+        });
+    }
+}
+
+function toggleAllTasksEditBTNs(type='') {
+    const allTasksEditBTN = document.querySelectorAll('.priority-edit-container > .edit');
+    if (type === 'hide'){
+        allTasksEditBTN.forEach((button) => {
+            button.classList.add('hidden')
+        });
+    } else {
+        allTasksEditBTN.forEach((button) => {
+            button.classList.remove('hidden')
+        });
+    }
+}
+
+function toggleAllProjectsEditBTNs(type='') {
+    const allProjectsEditBTN = document.querySelectorAll('.project-drop-down-buttons > .edit');
+    if (type === 'hide'){
+        allProjectsEditBTN.forEach((button) => {
+            button.classList.add('hidden')
+        });
+    } else {
         allProjectsEditBTN.forEach((button) => {
             button.classList.remove('hidden')
         });
