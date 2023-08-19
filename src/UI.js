@@ -1,4 +1,4 @@
-import {CreateToDo} from "./app";
+import {CreateToDo, toggleAllTasksEditBTNs} from "./app";
 import {createAddProjectLI} from "./project";
 import {createTask} from "./ToDo";
 import { addToDoToInbox, addToDoToProjectStorage } from "./storage";
@@ -112,6 +112,7 @@ function cancelFormBTN(form) {
     cancelBTN.addEventListener('click', () => {
         form.remove();
         createAddTaskDiv();
+        toggleAllTasksEditBTNs();
     });
 }
 
@@ -128,6 +129,7 @@ function submitFormBTN(form) {
             addToDoToProjectStorage(ToDo, tab);
         form.remove();
         createAddTaskDiv();
+        toggleAllTasksEditBTNs();
     });
 }
 
@@ -138,6 +140,7 @@ function createAddTaskDiv() {
     addTaskLI.innerHTML = `<img src="../src/icons/plus.svg" alt="Plus icon" class="plus-icon">
                            <span>Add task</span>`
     addTaskLI.addEventListener('click', () => {
+        toggleAllTasksEditBTNs('hide')
         createTaskForm();
         deleteAddTaskDiv();
     });
@@ -159,4 +162,7 @@ function clearTab() {
     tasks.forEach((task) => {
         task.remove()
     });
+    const todoForm = document.querySelector('.todo-form');
+    if (todoForm)
+        todoForm.remove()
 }
