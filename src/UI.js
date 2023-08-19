@@ -1,4 +1,4 @@
-import {CreateToDo, toggleAllTasksEditBTNs} from "./app";
+import {CreateToDo, toggleAllTasksEditBTNs, checkSubmittedForm} from "./app";
 import {createAddProjectLI} from "./project";
 import {createTask} from "./ToDo";
 import { addToDoToInbox, addToDoToProjectStorage, checkIfToDoExistsInProjectOrInbox } from "./storage";
@@ -71,21 +71,22 @@ function createToDoContainer() {
 function createTaskForm() {
     const todosUL = document.querySelector('.todos');
     const form = document.createElement('form');
-    form.setAttribute('class', 'todo-form')
+    form.setAttribute('action', ' ');
+    form.setAttribute('class', 'todo-form');
     form.innerHTML = `
             <div class="title">
                 <label for="title">Title:</label>
-                <input type="text" name="title" id="title" autofocus autocomplete="off" maxlength="50" placeholder="Take the trash out">
+                <input type="text" name="title" id="title" autofocus autocomplete="off" maxlength="50" placeholder="Take the trash out" min="1" required>
             </div>
 
             <div class="due-date">
                 <label for="due-date">Due Date</label>
-                <input type="date" name="due-date" id="due-date">
+                <input type="date" name="due-date" id="due-date" required>
             </div>
 
             <div class="priority">
                 <label for="priority">Priority</label>
-                <select name="priority" id="priority">
+                <select name="priority" id="priority" required>
                     <option value="low">Low</option>
                     <option value="medium">Medium</option>
                     <option value="high">High</option>
@@ -118,6 +119,7 @@ function submitFormBTN(form) {
     const submitBTN = document.querySelector('.buttons > .submit');
     submitBTN.addEventListener('click', () => {
         const submittedForm = document.querySelectorAll('.todo-form > div');
+        if (!(checkSubmittedForm(submittedForm))) return;
         const tab = document.querySelector('.title-of-tab').textContent;
         const ToDo = CreateToDo(submittedForm);
         if (checkIfToDoExistsInProjectOrInbox(ToDo.titleName, tab)) {
