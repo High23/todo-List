@@ -1,5 +1,5 @@
-import { setLocalStorageItemsOnPageLoad, checkLocalStorageOnPageLoad } from './storage';
-import { createLayout } from './UI';
+import { setLocalStorageItemsOnPageLoad, checkLocalStorageOnPageLoad } from './modules/storage';
+import { createLayout } from './modules/UI';
 import './style.css'
 
 createLayout();
