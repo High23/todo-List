@@ -1,5 +1,5 @@
 import { deleteAddTaskDiv, createAddTaskDiv } from "./UI";
-import { CreateToDo, updateID } from "./app";
+import { CreateToDo, updateID, hideAllOtherEditBTNs, unHideAllEditBTNs } from "./app";
 
 export {createTask}
 
@@ -77,8 +77,9 @@ function createToDoDetails(priority, note, id, taskDropDownIcon) {
     viewToDoDetails(taskDropDownIcon, taskLI);
     editToDoBTN.addEventListener('click', () => {
         taskLI.classList.add('hidden');
-        deleteAddTaskDiv()
-        editToDosInfo(taskLI)
+        deleteAddTaskDiv();
+        hideAllOtherEditBTNs(editToDoBTN, 'task');
+        editToDosInfo(taskLI);
     });
     deleteToDoBTN.addEventListener('click', () => {
         taskLI.remove();
@@ -121,6 +122,20 @@ function editToDosInfo(taskLI) {
                 <button type="button" class="cancel">Cancel</button>
             </div>`;
     todosUL.insertBefore(form, taskLI);
+
+    /* Couldn't bother putting the rest of the code below into separate functions 
+        like I did in project.js so its all here
+        TL;CBR (Too long, cant bother reading)
+        Works the same as newNameCancelBTN and newNameSubmitBTN in project.js
+        except for ToDos.
+
+        > Save button clicked 
+        > check where the editing happened (inbox or a project) 
+        > replace old ToDo in local storage with edited ToDo 
+        > remove and add/adjust necessary DOM elements
+
+        The cancel button just does that last line
+    */
     const todoSaveBTN = document.querySelector('.edit-todo > .submit');
     todoSaveBTN.addEventListener('click', () => {
         const submittedForm = document.querySelectorAll('.todo-form > div');
@@ -142,14 +157,19 @@ function editToDosInfo(taskLI) {
             });
             localStorage.setItem('projects', JSON.stringify(projects));
         }
+        /* Line 149 makes the todo viewable while the two lines after 
+            just change the todo's title and check mark border color
+        */
         taskLI.classList.remove('hidden');
         taskLI.childNodes[0].childNodes[3].textContent = ToDo.titleName;
+        taskLI.childNodes[0].childNodes[2].style['border-color'] = localStorage.getItem(ToDo.priority);
         const view = taskLI.childNodes[2];
         const details = taskLI.childNodes[1].childNodes[1];
         view.classList.add('hidden');
         details.setAttribute('src', '../src/icons/triangle-down.png');
         form.remove();
         createAddTaskDiv();
+        unHideAllEditBTNs('task');
     });
     const todoCancelBTN = document.querySelector('.edit-todo > .cancel');
     todoCancelBTN.addEventListener('click', () => {
@@ -160,6 +180,7 @@ function editToDosInfo(taskLI) {
         details.setAttribute('src', '../src/icons/triangle-down.png');
         form.remove();
         createAddTaskDiv();
+        unHideAllEditBTNs('task');
     });
 }
 
