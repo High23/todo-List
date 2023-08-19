@@ -327,6 +327,11 @@ input[type="radio"]:checked {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    width: clamp(80px, 100%, 130px);
+}
+
+.priority-edit-container > span {
+    text-align: center;    
 }
 
 .project > span {
