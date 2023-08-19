@@ -1,7 +1,7 @@
 import {CreateToDo, toggleAllTasksEditBTNs} from "./app";
 import {createAddProjectLI} from "./project";
 import {createTask} from "./ToDo";
-import { addToDoToInbox, addToDoToProjectStorage } from "./storage";
+import { addToDoToInbox, addToDoToProjectStorage, checkIfToDoExistsInProjectOrInbox } from "./storage";
 import { inboxTab, todayTab, weekTab, monthTab} from "./tabs";
 
 export {createAddTaskDiv, deleteAddTaskDiv, clearTab}
@@ -122,11 +122,16 @@ function submitFormBTN(form) {
         const submittedForm = document.querySelectorAll('.todo-form > div');
         const tab = document.querySelector('.title-of-tab').textContent;
         const ToDo = CreateToDo(submittedForm);
-        createTask(ToDo.titleName, ToDo.dueDate, ToDo.priority, ToDo.note);
-        if (tab === 'Inbox')
+        if (checkIfToDoExistsInProjectOrInbox(ToDo.titleName, tab)) {
+            alert('ToDos must have different names');
+            return;
+        }
+        if (tab === 'Inbox') {
             addToDoToInbox(ToDo);
-        else 
+        } else { 
             addToDoToProjectStorage(ToDo, tab);
+        }
+        createTask(ToDo.titleName, ToDo.dueDate, ToDo.priority, ToDo.note);
         form.remove();
         createAddTaskDiv();
         toggleAllTasksEditBTNs();
