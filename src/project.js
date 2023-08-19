@@ -1,7 +1,7 @@
 import { checkIfProjectExists, addProjectToStorage, loadTodos } from "./storage";
 import { clearTab } from "./UI";
 import { switchTab } from "./tabs";
-import {updateID, hideAllOtherEditBTNs, unHideAllEditBTNs} from "./app";
+import {updateID, hideAllOtherEditBTNs, unHideAllEditBTNs, toggleAllProjectsEditBTNs} from "./app";
 
 export {createAddProjectLI, createProject, deleteAddProjectLI};
 
@@ -13,6 +13,7 @@ function createAddProjectLI() {
                               <span>Add project</span>`;
     projectsUl.appendChild(addProjectLI);
     addProjectLI.addEventListener('click', () => {
+        toggleAllProjectsEditBTNs('hide')
         deleteAddProjectLI();
         createProjectNameForm(projectsUl);
     });
@@ -37,20 +38,20 @@ function createProject(title) {
     const projectsUl = document.querySelector('.projects');
     const projectLI = document.createElement('li');
     projectLI.setAttribute('class', 'project');
-    const projectName = document.createElement('span');
+    const projectNameSpan = document.createElement('span');
     const projectDropDownIcon = document.createElement('img');
     projectDropDownIcon.setAttribute('src', '../src/icons/triangle-down.png');
     projectDropDownIcon.setAttribute('alt', 'Drop down icon');
     projectDropDownIcon.setAttribute('class', 'details');
-    projectLI.appendChild(projectName);
+    projectLI.appendChild(projectNameSpan);
     projectLI.appendChild(projectDropDownIcon);
-    projectName.innerHTML = title;
+    projectNameSpan.innerHTML = title;
     projectsUl.append(projectLI);
     const projectID = document.querySelectorAll('.project').length - 1;
     projectLI.setAttribute('data-Id', projectID);
-    projectName.addEventListener('click', () => {
+    projectNameSpan.addEventListener('click', () => {
         clearTab()
-        title = projectName.innerHTML
+        title = projectNameSpan.innerHTML
         openProject(title, projectLI);
     });
     
@@ -62,6 +63,7 @@ function cancelProjectNameForm(projectNameForm) {
     cancelBTN.addEventListener('click', () => {
         projectNameForm.remove();
         createAddProjectLI();
+        toggleAllProjectsEditBTNs()
     });
 }
 
@@ -76,6 +78,7 @@ function submitProjectNameForm(projectNameForm) {
             addProjectToStorage(projectNameForm.childNodes[2].value)
             projectNameForm.remove();
             createAddProjectLI()
+            toggleAllProjectsEditBTNs()
         };
     });
 }
