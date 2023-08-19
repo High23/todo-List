@@ -1,6 +1,7 @@
-import { format } from "date-fns";
+import { format, isThisMonth } from "date-fns";
 
-export {CreateToDo, updateID, hideAllOtherEditBTNs, unHideAllEditBTNs, toggleAllTasksEditBTNs, toggleAllProjectsEditBTNs};
+export {CreateToDo, updateID, hideAllOtherEditBTNs, unHideAllEditBTNs, 
+    toggleAllTasksEditBTNs, toggleAllProjectsEditBTNs, checkSubmittedForm};
 
 
 function CreateToDo(submittedForm) {
@@ -50,38 +51,52 @@ function unHideAllEditBTNs(type) {
     if (type === 'task') {
         const allTasksEditBTN = document.querySelectorAll('.priority-edit-container > .edit');
         allTasksEditBTN.forEach((button) => {
-            button.classList.remove('hidden')
+            button.classList.remove('hidden');
         });
     } else if (type === 'project') {
         const allProjectsEditBTN = document.querySelectorAll('.project-drop-down-buttons > .edit');
         allProjectsEditBTN.forEach((button) => {
-            button.classList.remove('hidden')
+            button.classList.remove('hidden');
         });
     }
 }
 
 function toggleAllTasksEditBTNs(type='') {
     const allTasksEditBTN = document.querySelectorAll('.priority-edit-container > .edit');
-    if (type === 'hide'){
+    if (type === 'hide') {
         allTasksEditBTN.forEach((button) => {
-            button.classList.add('hidden')
+            button.classList.add('hidden');
         });
     } else {
         allTasksEditBTN.forEach((button) => {
-            button.classList.remove('hidden')
+            button.classList.remove('hidden');
         });
     }
 }
 
 function toggleAllProjectsEditBTNs(type='') {
     const allProjectsEditBTN = document.querySelectorAll('.project-drop-down-buttons > .edit');
-    if (type === 'hide'){
+    if (type === 'hide') {
         allProjectsEditBTN.forEach((button) => {
-            button.classList.add('hidden')
+            button.classList.add('hidden');
         });
     } else {
         allProjectsEditBTN.forEach((button) => {
-            button.classList.remove('hidden')
+            button.classList.remove('hidden');
         });
     }
+}
+
+function checkSubmittedForm(submittedForm) {
+    const titleName = submittedForm[0].childNodes[3].value;
+    let dueDate = submittedForm[1].childNodes[3].value;
+    dueDate = dueDate.split('-');
+    if (titleName.length < 1) {
+        alert("Project must at least have one letter");
+        return false;
+    } else if (!(isThisMonth(new Date(dueDate[0], dueDate[1] - 1, dueDate[2])))) {
+        alert("Due dates MUST be in the current month")
+        return false;
+    }
+    return true;
 }
