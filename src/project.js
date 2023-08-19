@@ -1,6 +1,7 @@
 import { checkIfProjectExists, addProjectToStorage, loadTodos } from "./storage";
 import { clearTab } from "./UI";
 import { switchTab } from "./tabs";
+import {updateID} from "./app";
 
 export {createAddProjectLI, createProject, deleteAddProjectLI};
 
@@ -46,7 +47,7 @@ function createProject(title) {
     projectName.innerHTML = title;
     projectsUl.append(projectLI);
     const projectID = document.querySelectorAll('.project').length - 1;
-    projectLI.setAttribute('data-project-id', projectID);
+    projectLI.setAttribute('data-Id', projectID);
     projectName.addEventListener('click', () => {
         clearTab()
         title = projectName.innerHTML
@@ -79,15 +80,12 @@ function submitProjectNameForm(projectNameForm) {
     });
 }
 
-function getProjectID(projectLI) {
-    return Number(projectLI.dataset.projectId);
-}
 
 function openProject(title, projectLI) {
     const tabTitle = document.querySelector('.title-of-tab');
     tabTitle.innerHTML = title;
     let projects = JSON.parse(localStorage.getItem('projects'));
-    let projectIndex = projectLI.dataset.projectId
+    let projectIndex = projectLI.dataset.id
     loadTodos(projects[projectIndex][[title]])
 }
 
@@ -112,11 +110,11 @@ function createProjectDetails(id, dropDownIcon) {
     projects[id].appendChild(div);
     viewProjectDetails(dropDownIcon, projectLI)
     editBTN.addEventListener('click', () => {
-        id = getProjectID(projectLI)
+        id = updateID(projectLI)
         editProjectNameForm(id)
     });
     deleteBTN.addEventListener('click', () => {
-        id = getProjectID(projectLI)
+        id = updateID(projectLI)
         deleteProject(id)
         switchTab()
     });
@@ -164,7 +162,7 @@ function deleteProject(id) {
 function returnProperProjectLI(id) {
     let projectLI = document.querySelectorAll('.project');
     for (let i = 0; i < projectLI.length; i++) {
-        if (Number(projectLI[i].dataset.projectId) === id){
+        if (Number(projectLI[i].dataset.id) === id){
             return projectLI[i];
         }
     }
@@ -224,6 +222,6 @@ function updateProjectId() {
     const projectLIs = document.querySelectorAll('.project')
     if (projectLIs === false) return;
     projectLIs.forEach((project, value) => {
-        project.setAttribute('data-project-id', value)
+        project.setAttribute('data-Id', value)
     })
 }
