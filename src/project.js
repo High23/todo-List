@@ -1,7 +1,7 @@
 import { checkIfProjectExists, addProjectToStorage, loadTodos } from "./storage";
 import { clearTab } from "./UI";
 import { switchTab } from "./tabs";
-import {updateID} from "./app";
+import {updateID, hideAllOtherEditBTNs, unHideAllEditBTNs} from "./app";
 
 export {createAddProjectLI, createProject, deleteAddProjectLI};
 
@@ -111,7 +111,9 @@ function createProjectDetails(id, dropDownIcon) {
     viewProjectDetails(dropDownIcon, projectLI)
     editBTN.addEventListener('click', () => {
         id = updateID(projectLI)
+        hideAllOtherEditBTNs(editBTN, 'project')
         editProjectNameForm(id)
+        
     });
     deleteBTN.addEventListener('click', () => {
         id = updateID(projectLI)
@@ -173,6 +175,7 @@ function newNameCancelBTN(projectNameForm, projectLI) {
     newNameCancelBTN.addEventListener('click', () => {
         projectNameForm.remove();
         toggleHidden(projectLI)
+        unHideAllEditBTNs('project');
     });
 }
 
@@ -193,7 +196,9 @@ function newNameSubmitBTN(projectNameForm, projectLI, id) {
             projectLI.childNodes[1].classList.toggle('hidden')
             projectLI.childNodes[1].setAttribute('src', '../src/icons/triangle-down.png');
             insertNewProjectName(projectNameForm, projectLI, id);
-            switchTab()
+            clearTab();
+            openProject(projectNameForm.childNodes[2].value, projectLI);
+            unHideAllEditBTNs('project');
         }
     });
 }
