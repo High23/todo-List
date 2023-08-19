@@ -1,5 +1,4 @@
 import { format, isThisMonth } from "date-fns";
-import '../style.css'
 
 export {CreateToDo, updateID, hideAllOtherEditBTNs, unHideAllEditBTNs, 
     toggleAllTasksEditBTNs, toggleAllProjectsEditBTNs, checkSubmittedForm};

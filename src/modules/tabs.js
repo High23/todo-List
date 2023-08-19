@@ -2,7 +2,6 @@ import { createTask } from "./ToDo";
 import { clearTab, deleteAddTaskDiv } from "./UI";
 import { loadTodos } from "./storage";
 import {format, isToday, isThisWeek, isThisMonth, startOfWeek, endOfWeek} from "date-fns";
-import '../style.css'
 
 export {inboxTab, todayTab, weekTab, monthTab, switchTab}
 

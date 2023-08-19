@@ -1,6 +1,5 @@
 import { deleteAddTaskDiv, createAddTaskDiv } from "./UI";
 import { CreateToDo, updateID, hideAllOtherEditBTNs, unHideAllEditBTNs, checkSubmittedForm } from "./app";
-import '../style.css'
 
 export {createTask}
 
